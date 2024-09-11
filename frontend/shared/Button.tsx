@@ -2,8 +2,8 @@
 
 type ButtonProps = {
   className?: string;
-  type?: "submit" | "reset" | "button"; // Optional type, defaults to "button"
-  onClick?: () => void; // Optional onClick handler
+  type?: "submit" | "reset" | "button";
+  onClick?: () => void;
   children: React.ReactNode;
 };
 

@@ -11,6 +11,11 @@ export default function AddProductPage() {
   const [productPrice, setProductPrice] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [textAreaCount, setTextAreaCount] = useState(0);
+
+  const recalculateTextArena = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaCount(e.target.value.length);
+  };
 
   const handleImagePicked = (file: File) => {
     setSelectedImage(file);
@@ -65,7 +70,9 @@ export default function AddProductPage() {
               id="name"
               name="productName"
               value={productName}
-              onChange={(e) => setProductName(e.target.value)}
+              onChange={(e) => {
+                setProductName(e.target.value);
+              }}
               required
             />
           </p>
@@ -74,6 +81,7 @@ export default function AddProductPage() {
               <label htmlFor="price">Price</label>
               <input
                 type="number"
+                inputMode="numeric"
                 min="1"
                 id="price"
                 name="productPrice"
@@ -97,15 +105,27 @@ export default function AddProductPage() {
               </select>
             </p>
           </div>
-          <p>
+          <p className={styles.descriptionContainer}>
             <label htmlFor="description">Description</label>
-            <textarea
-              id="description"
-              name="productDescription"
-              value={productDescription}
-              onChange={(e) => setProductDescription(e.target.value)}
-              required
-            ></textarea>
+            <div className={styles.textareaWrapper}>
+              <label className={styles.charCount}>
+                {`${textAreaCount}/50`}{" "}
+              </label>
+
+              <textarea
+                id="description"
+                name="productDescription"
+                value={productDescription}
+                maxLength={50}
+                rows={2}
+                minLength={10}
+                onChange={(e) => {
+                  setProductDescription(e.target.value);
+                  recalculateTextArena(e);
+                }}
+                required
+              ></textarea>
+            </div>
           </p>
           <ImagePicker
             label="Your image"

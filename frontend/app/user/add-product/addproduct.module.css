@@ -108,3 +108,15 @@
   color: #979797;
   cursor: not-allowed;
 }
+
+.descriptionContainer {
+  margin-bottom: 1rem;
+}
+
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.charCount {
+  align-self: flex-end;
+}
