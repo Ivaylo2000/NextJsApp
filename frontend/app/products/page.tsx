@@ -13,6 +13,7 @@ export default async function ProductsPage() {
     }
 
     const data = await response.json();
+
     if (data.products && Array.isArray(data.products)) {
       products = data.products;
     } else {
@@ -23,7 +24,7 @@ export default async function ProductsPage() {
   } catch (err) {
     error = (err as Error).message;
   }
-
+  console.log(products);
   if (error) {
     return <p>Error: {error}</p>;
   }

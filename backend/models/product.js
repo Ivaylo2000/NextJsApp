@@ -8,6 +8,6 @@ const productSchema = new Schema({
   description: { type: String, required: true },
   imageUrl: { type: String, required: false },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  username: { type: String, required: true },
 });
-
 module.exports = mongoose.model("Product", productSchema);
