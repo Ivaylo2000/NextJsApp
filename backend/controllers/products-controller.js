@@ -4,18 +4,17 @@ const User = require("../models/user");
 
 const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({}).populate("userId", "username");
+    const products = await Product.find({});
     const baseUrl = "http://localhost:5000/uploads/images";
 
     const productsWithImages = products.map((product) => {
       const productObj = product.toObject({ getters: true });
 
-      const username = productObj.userId ? productObj.userId.username : null;
+      const imageUrl = productObj.imageUrl;
 
       return {
         ...productObj,
-        imageUrl: productObj.imageUrl ? baseUrl + productObj.imageUrl : null,
-        username,
+        imageUrl,
       };
     });
 
@@ -24,15 +23,12 @@ const getProducts = async (req, res, next) => {
     return handleError("Something went wrong", 500, next);
   }
 };
-
 const getProduct = async (req, res, next) => {
-  const productName = req.params.productName.replaceAll("-", " "); // Replace hyphens with spaces
+  const productName = req.params.productName.replaceAll("-", " ");
+  const baseUrl = "http://localhost:5000/uploads/images";
 
   try {
-    const product = await Product.findOne({ name: productName }).populate(
-      "userId",
-      "username"
-    );
+    const product = await Product.findOne({ name: productName });
 
     if (!product) {
       return handleError("Product not found", 404, next);
@@ -40,9 +36,12 @@ const getProduct = async (req, res, next) => {
 
     const productObj = product.toObject({ getters: true });
 
-    const username = productObj.userId ? productObj.userId.username : null;
-
-    res.json({ product: { ...productObj, username } });
+    res.json({
+      product: {
+        ...productObj,
+        imageUrl: productObj.imageUrl,
+      },
+    });
   } catch (err) {
     return handleError("Server error", 500, next);
   }
@@ -58,6 +57,7 @@ const addProduct = async (req, res, next) => {
     if (!user) {
       return handleError("User not found", 404, next);
     }
+
     const newProduct = new Product({
       name: productName,
       price: productPrice,
@@ -65,10 +65,11 @@ const addProduct = async (req, res, next) => {
       description: productDescription,
       imageUrl: req.file ? `/uploads/images/${req.file.filename}` : null,
       userId: userId,
-      username: user.username,
+      username: "Test",
     });
 
     await newProduct.save();
+
     res
       .status(201)
       .json({ message: "Product added successfully!", product: newProduct });

@@ -13,7 +13,7 @@ router.get("/", getProducts);
 
 router.get("/:productName", getProduct);
 
-router.use(auth);
+// router.use(auth);
 
 router.post(
   "/addProduct",

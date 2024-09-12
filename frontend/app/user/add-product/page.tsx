@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 import styles from "./addproduct.module.css";
@@ -12,6 +13,7 @@ export default function AddProductPage() {
   const [productCategory, setProductCategory] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [textAreaCount, setTextAreaCount] = useState(0);
+  const router = useRouter();
 
   const recalculateTextArena = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextAreaCount(e.target.value.length);
@@ -45,8 +47,9 @@ export default function AddProductPage() {
 
       if (response.ok) {
         alert("Product added successfully!");
+        router.push("/products");
       } else {
-        alert("Failed to add product.");
+        alert("Failed to add product. frend");
       }
     } catch (error) {
       console.error("Error adding product:", error);
@@ -99,6 +102,9 @@ export default function AddProductPage() {
                 onChange={(e) => setProductCategory(e.target.value)}
                 required
               >
+                <option value="" disabled>
+                  Select a category
+                </option>
                 <option value="Clothing">Clothing</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Sport">Sport</option>

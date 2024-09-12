@@ -2,6 +2,9 @@ import styles from "./products.module.css";
 import Image from "next/image";
 import NavLink from "../MainHeader/nav-links";
 import { IProduct } from "@/interface/IProduct";
+//NAPRAVI PRODUCTS DA STAVA ZA PRODUCT I ZA
+//PRODUCTS KATO IZMESTISH LI V PRODUCTPAGA
+//ZAEDNO S NAVLINKA
 export default function Products({
   imageUrl,
   name,
@@ -10,19 +13,20 @@ export default function Products({
   _id,
   category,
 }: IProduct) {
+  const imageSrc = imageUrl.startsWith("http")
+    ? imageUrl
+    : `http://localhost:5000${
+        imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`
+      }`;
   return (
-    <li key={_id}>
-      <article className={styles.product}>
+    <li className={styles.product} key={_id}>
+      <article>
         <header>
           <div className={styles.image}>
             {imageUrl && (
               <Image
                 fill
-                src={
-                  imageUrl.startsWith("https://")
-                    ? imageUrl
-                    : `http://localhost:5000${imageUrl}`
-                }
+                src={imageSrc}
                 alt={name}
                 style={{ objectFit: "cover" }}
               />
@@ -30,7 +34,7 @@ export default function Products({
           </div>
           <div className={styles.headerText}>
             <h2>{name}</h2>
-            <p>Category: {category} </p>
+            <p>Category: {category}</p>
           </div>
         </header>
         <div className={styles.content}>

@@ -6,8 +6,9 @@ export default async function ProductsPage() {
   let error: string | null = null;
 
   try {
-    const response = await fetch("http://localhost:5000/products");
-
+    const response = await fetch("http://localhost:5000/products", {
+      next: { revalidate: 10 },
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
@@ -24,16 +25,17 @@ export default async function ProductsPage() {
   } catch (err) {
     error = (err as Error).message;
   }
-  console.log(products);
+
   if (error) {
     return <p>Error: {error}</p>;
   }
-
+  console.log(products);
   return (
     <main className={styles.main}>
       <ul className={styles.products}>
         {products.map((product: IProduct) => (
           <Products
+            key={product._id}
             _id={product._id}
             category={product.category}
             imageUrl={product.imageUrl}

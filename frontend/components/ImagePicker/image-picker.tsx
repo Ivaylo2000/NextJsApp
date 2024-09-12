@@ -52,7 +52,7 @@ export default function ImagePicker({
           className={styles.input}
           type="file"
           id={name}
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/jpg"
           name={name}
           required
           ref={imageInput}
