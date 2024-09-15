@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const productsRoutes = require("./routes/products-routes");
 const usersRoutes = require("./routes/users-routes");
+require("dotenv").config();
 
 const path = require("path");
 
