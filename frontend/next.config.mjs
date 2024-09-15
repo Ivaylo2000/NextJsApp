@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["next-js-app-backend.vercel.app", "localhost"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "next-js-app-backend.vercel.app",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   webpack(config) {
     config.module.rules.push({
