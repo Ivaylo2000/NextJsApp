@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ["via.placeholder.com", "localhost"],
-  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
