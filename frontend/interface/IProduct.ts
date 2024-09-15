@@ -5,4 +5,6 @@ export interface IProduct {
   category: string;
   description: string;
   imageUrl: string;
+  username: string;
+  userId: string;
 }

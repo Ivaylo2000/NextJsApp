@@ -5,7 +5,6 @@ const User = require("../models/user");
 const getProducts = async (req, res, next) => {
   try {
     const products = await Product.find({});
-    const baseUrl = "http://localhost:5000/uploads/images";
 
     const productsWithImages = products.map((product) => {
       const productObj = product.toObject({ getters: true });
@@ -25,7 +24,6 @@ const getProducts = async (req, res, next) => {
 };
 const getProduct = async (req, res, next) => {
   const productName = req.params.productName.replaceAll("-", " ");
-  const baseUrl = "http://localhost:5000/uploads/images";
 
   try {
     const product = await Product.findOne({ name: productName });
@@ -48,9 +46,14 @@ const getProduct = async (req, res, next) => {
 };
 
 const addProduct = async (req, res, next) => {
-  const { productName, productPrice, productCategory, productDescription } =
-    req.body;
-  const userId = req.user?._id || "66ddc936eff55d4ee1599767";
+  const {
+    productName,
+    productPrice,
+    productCategory,
+    productDescription,
+    username,
+    userId,
+  } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -64,8 +67,8 @@ const addProduct = async (req, res, next) => {
       category: productCategory,
       description: productDescription,
       imageUrl: req.file ? `/uploads/images/${req.file.filename}` : null,
+      username: username,
       userId: userId,
-      username: "Test",
     });
 
     await newProduct.save();
@@ -77,8 +80,31 @@ const addProduct = async (req, res, next) => {
     return handleError("Failed to add product", 500, next);
   }
 };
+const getUserProducts = async (req, res, next) => {
+  const username = req.params.username;
+  try {
+    const products = await Product.find({ username });
+    if (products.length === 0) {
+      return handleError("Products not found", 404, next);
+    }
+    const productsWithImages = products.map((product) => {
+      const productObj = product.toObject({ getters: true });
+      return {
+        ...productObj,
+        imageUrl: productObj.imageUrl,
+      };
+    });
+    res.json({
+      message: `These are ${username}'s products!`,
+      products: productsWithImages,
+    });
+  } catch (error) {
+    return handleError("Server error", 500, next);
+  }
+};
 module.exports = {
   getProducts,
   getProduct,
   addProduct,
+  getUserProducts,
 };

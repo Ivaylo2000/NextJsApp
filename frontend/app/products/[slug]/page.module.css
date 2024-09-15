@@ -12,11 +12,13 @@
   font-size: 1.5rem;
   height: 500px;
 }
-.productSeller > a {
+.productSeller {
   background: linear-gradient(90deg, #f9572a, #ff8a05);
   background-clip: text;
+  font-size: 15px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding: 5px;
 }
 .image {
   position: relative;
@@ -51,7 +53,7 @@
 }
 
 .headerText p {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #cfa69b;
   font-style: italic;
 }
@@ -87,64 +89,4 @@
   padding: 10px;
   font-size: 20px;
   width: 80%;
-}
-.actions {
-  padding: 1rem 0 1rem 0;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-align: right;
-}
-
-.actions button {
-  display: inline-block;
-  border-radius: 0.5rem;
-  background: linear-gradient(90deg, #f9572a, #ff9b05);
-  color: #ffffff;
-  font-weight: bold;
-  text-decoration: none;
-  border: none;
-  font-size: 24px;
-}
-
-.actions button:hover,
-.actions button:active {
-  background: linear-gradient(90deg, #fd4715, #f9b241);
-  box-shadow: 0 0 12px rgba(242, 100, 18, 0.8);
-  cursor: pointer;
-}
-
-.quantitySelector {
-  display: flex;
-  height: 30px;
-  padding-left: 1rem;
-}
-.quantitySelector > input {
-  width: 50px;
-  text-align: center;
-  font-size: 20px;
-  background-color: #ffffff;
-  border: none;
-}
-
-.quantitySelector > input::-webkit-outer-spin-button,
-.quantitySelector > input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.quantitySelector > button {
-  width: 30px;
-  border-radius: 0;
-  border: none;
-}
-.quantitySelect > input {
-  margin: 0;
-  padding: 0;
-  height: 50px;
-  width: 50px;
-}
-
-.addToCart > button {
-  padding: 0.5rem 1rem;
 }

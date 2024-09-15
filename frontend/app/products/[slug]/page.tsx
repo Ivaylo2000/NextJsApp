@@ -2,33 +2,36 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { IProduct } from "@/interface/IProduct";
-import Button from "@/shared/Button";
-
+import AddToCart from "@/components/AddToCart/AddToCart";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import toast from "react-hot-toast";
 export default async function ProductPage({
   params,
 }: {
   params: { slug: string };
 }) {
+  const cookieStore = cookies();
+  const userId = cookieStore.get("userId")?.value || "";
   const { slug } = params;
   let product: IProduct;
 
   try {
-    const response = await fetch(`http://localhost:5000/products/${slug}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products/${slug}`
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = errorData?.message || "Failed to fetch product";
 
-      throw new Error(errorMessage);
+      toast.error(errorMessage);
     }
     const data = await response.json();
     product = data.product;
-    console.log(data.product);
-  } catch (err: any) {
-    console.log(err);
-    return <div>Error: {err.message}</div>;
+  } catch (err: unknown) {
+    return notFound();
   }
-  console.log(product);
 
   return (
     <article className={styles.product}>
@@ -37,11 +40,7 @@ export default async function ProductPage({
           {product.imageUrl && (
             <Image
               fill
-              src={
-                product.imageUrl.startsWith("https://")
-                  ? product.imageUrl
-                  : `http://localhost:5000${product.imageUrl}`
-              }
+              src={`${process.env.NEXT_PUBLIC_API_URL}${product.imageUrl}`}
               alt={product.name}
               style={{ objectFit: "cover" }}
             />
@@ -50,12 +49,16 @@ export default async function ProductPage({
       </header>
       <div className={styles.productInformation}>
         <div className={styles.headerText}>
-          <p>Category: {product.category} </p>
+          <p>
+            Category:
+            <span className={styles.productSeller}> {product.category} </span>
+          </p>
           <p>
             By:
             <span className={styles.productSeller}>
-              {/* tuk e linka kum usera koito e kachil obqvata */}
-              <Link href="vjhig"> {product._id}</Link>
+              <Link href={`/user/${product.username}/products`}>
+                {product.username}
+              </Link>
             </span>
           </p>
 
@@ -70,16 +73,7 @@ export default async function ProductPage({
             Price: <span>{product.price} $</span>
           </p>
 
-          <div className={styles.actions}>
-            <div className={styles.quantitySelector}>
-              <Button>-</Button>
-              <input disabled min={1} defaultValue={1} type="number" />
-              <Button>+</Button>
-            </div>
-            <div className={styles.addToCart}>
-              <Button>Add to cart</Button>
-            </div>
-          </div>
+          <AddToCart product={product} userId={userId} />
         </div>
       </div>
     </article>

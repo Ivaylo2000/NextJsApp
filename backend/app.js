@@ -1,11 +1,9 @@
 const express = require("express");
-// const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const productsRoutes = require("./routes/products-routes");
 const usersRoutes = require("./routes/users-routes");
-// const cartRoutes = require("./routes/cart-routes");
-// const handleError = require("./utils/handleError");
+
 const path = require("path");
 
 const app = express();
@@ -27,10 +25,10 @@ app.use((req, res, next) => {
 
 app.use("/products", productsRoutes);
 app.use("/user", usersRoutes);
-// app.use("/cart");
+
 mongoose
   .connect(
-    `mongodb+srv://ivo:123@nextjsapp.q4ke9.mongodb.net/nextjsapp?retryWrites=true&w=majority&appName=nextjsapp`
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@nextjsapp.q4ke9.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=nextjsapp`
   )
   .then(() => {
     app.listen(process.env.PORT || 5000);

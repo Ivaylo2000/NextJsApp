@@ -1,0 +1,137 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+}
+.cart > h1 {
+  background: linear-gradient(90deg, #f9572a, #ff8a05);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-size: 40px;
+}
+.cartList {
+  max-width: 90rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-gap: 20px 5rem;
+  margin: 2rem auto;
+  list-style: none;
+  padding: 0;
+}
+.emptyCart {
+  text-align: center;
+  margin-top: 5rem;
+}
+.product {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  color: #ddd6cb;
+  background: linear-gradient(90deg, #2c1e19, #25200f);
+  margin: 3rem auto 5rem auto;
+  font-size: 1.5rem;
+}
+
+.product > header {
+  width: 100%;
+  height: 250px;
+}
+
+.productSeller > a {
+  background: linear-gradient(90deg, #f9572a, #ff8a05);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.image {
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.product img {
+  object-fit: cover;
+}
+
+.productInformation {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  text-align: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.itemName {
+  color: #ddd6cb;
+}
+
+.quantityControls {
+  display: flex;
+  height: 30px;
+}
+.itemsQuantity {
+  height: 30px;
+}
+.productInformation button {
+  display: inline-block;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #f9572a, #ff9b05);
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  font-size: 24px;
+}
+
+.quantityControls > input {
+  text-align: center;
+  font-size: 20px;
+  background-color: #ffffff;
+  border: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 70px;
+}
+
+.quantityControls > input::-webkit-outer-spin-button,
+.quantityControls > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantityControls > button {
+  width: 40px;
+  border-radius: 0;
+  border: none;
+}
+
+.productInformation button:hover,
+.productInformation button:active {
+  background: linear-gradient(90deg, #fd4715, #f9b241);
+  box-shadow: 0 0 12px rgba(242, 100, 18, 0.8);
+  cursor: pointer;
+}
+
+.itemPrice {
+  color: #ddd6cb;
+}
+
+.removeButton {
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #f9572a, #ff9b05);
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  font-size: 24px;
+}

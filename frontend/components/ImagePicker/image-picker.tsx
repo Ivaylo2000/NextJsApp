@@ -1,7 +1,6 @@
-// components/ImagePicker/image-picker.tsx
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import styles from "./image-picker.module.css";
 
@@ -9,16 +8,19 @@ interface ImagePickerProps {
   label: string;
   name: string;
   onImagePicked: (file: File) => void;
+  pickedImage: string | ArrayBuffer | null;
+  setPickedImage: React.Dispatch<
+    React.SetStateAction<string | ArrayBuffer | null>
+  >;
 }
 
 export default function ImagePicker({
   label,
   name,
   onImagePicked,
+  pickedImage,
+  setPickedImage,
 }: ImagePickerProps) {
-  const [pickedImage, setPickedImage] = useState<string | ArrayBuffer | null>(
-    null
-  );
   const imageInput = useRef<HTMLInputElement>(null);
 
   function handlePickClick() {
@@ -28,8 +30,8 @@ export default function ImagePicker({
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      setPickedImage(URL.createObjectURL(file)); // Use ObjectURL for preview
-      onImagePicked(file); // Pass the file to the parent component
+      setPickedImage(URL.createObjectURL(file));
+      onImagePicked(file);
     }
   }
 

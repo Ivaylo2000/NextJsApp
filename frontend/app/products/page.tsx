@@ -1,14 +1,18 @@
 import { IProduct } from "@/interface/IProduct";
 import styles from "./page.module.css";
 import Products from "@/components/Products/products";
+import toast from "react-hot-toast";
+
 export default async function ProductsPage() {
   let products: IProduct[] = [];
   let error: string | null = null;
-
   try {
-    const response = await fetch("http://localhost:5000/products", {
-      next: { revalidate: 10 },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/products`,
+      {
+        next: { revalidate: 5 },
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
@@ -24,12 +28,11 @@ export default async function ProductsPage() {
     }
   } catch (err) {
     error = (err as Error).message;
+    toast.error(error);
   }
-
   if (error) {
     return <p>Error: {error}</p>;
   }
-  console.log(products);
   return (
     <main className={styles.main}>
       <ul className={styles.products}>
@@ -42,6 +45,8 @@ export default async function ProductsPage() {
             name={product.name}
             description={product.description}
             price={product.price}
+            username={product.username}
+            userId={product.userId}
           />
         ))}
       </ul>

@@ -2,10 +2,10 @@ const User = require("../models/user");
 const handleError = require("../utils/handleError");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const user = require("../models/user");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
+
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -31,14 +31,16 @@ const login = async (req, res, next) => {
 
   let token;
   try {
-    token = jwt.sign({ usename: existingUser.username }, "jwt_secret_key", {
+    token = jwt.sign({ username: existingUser.username }, "jwt_secret_key", {
       expiresIn: "1h",
     });
   } catch (err) {
-    return handleError("Loging in failed", 500, next);
+    return handleError("Logging in failed", 500, next);
   }
+
   res.json({
     message: "Login successful!",
+    userId: existingUser._id,
     token,
     username: existingUser.username,
   });
@@ -51,7 +53,7 @@ const signup = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return handleError("User with this email already exists.", 422, next);
+      return res.json({ errorMessage: "User with this email already exists." });
     }
 
     existingUser = await User.findOne({ username: username });
@@ -71,7 +73,12 @@ const signup = async (req, res, next) => {
   } catch (err) {
     return handleError("Signup failed, please try again later.", 500, next);
   }
+
+  res.json({
+    message: "Creating account successful!",
+  });
 };
+
 module.exports = {
   login,
   signup,

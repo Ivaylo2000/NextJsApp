@@ -12,15 +12,17 @@
 .picker .button {
   border: 0;
   padding: 0.5rem 1.5rem;
-  background: #a4abb9;
+  background: linear-gradient(90deg, #f9572a, #ff9b05);
   border-radius: 2px;
   cursor: pointer;
   font: inherit;
+  font-size: 1.25rem;
+  color: #ddd6cb;
 }
 
 .picker .button:hover,
 .picker .button:focus {
-  background: #b3b9c6;
+  background: linear-gradient(90deg, #fd4715, #f9b241);
 }
 
 .preview {

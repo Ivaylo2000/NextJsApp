@@ -29,13 +29,6 @@
   align-items: center;
 }
 
-/* #main-header ul a:hover,
-#main-header ul a.active {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 10px;
-} */
-
 .dropdown {
   position: relative;
 }
@@ -43,7 +36,7 @@
 .dropdownMenu {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 0;
   z-index: 1000;
 }
@@ -65,7 +58,7 @@
 }
 
 .dropdownMenu li {
-  padding: 20px;
+  padding: 20px 40px;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -75,4 +68,15 @@
 .dropdownMenu li a {
   text-decoration: none;
   display: block;
+  font-family: "Montserrat", sans-serif;
+}
+
+.dropdownMenu li button {
+  text-decoration: none;
+  display: block;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
 }
