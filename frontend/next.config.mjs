@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "next-js-app-backend.vercel.app",
         port: "",
-        pathname: "/**",
+        pathname: "/uploads/images/**",
       },
     ],
   },
