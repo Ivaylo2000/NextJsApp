@@ -66,14 +66,10 @@ const addProduct = async (req, res, next) => {
       price: productPrice,
       category: productCategory,
       description: productDescription,
-      imageUrl: req.file
-        ? `https://next-js-app-backend.vercel.app/uploads/images/${req.file.filename}`
-        : null,
+      imageUrl: req.file ? `/uploads/images/${req.file.filename}` : null,
       username: username,
       userId: userId,
     });
-
-    await newProduct.save();
 
     res
       .status(201)
