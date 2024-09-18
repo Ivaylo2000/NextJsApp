@@ -33,6 +33,7 @@ export default async function ProductsPage() {
   if (error) {
     return <p>Error: {error}</p>;
   }
+
   return (
     <main className={styles.main}>
       <ul className={styles.products}>

@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "next-js-app-backend.vercel.app",
-        port: "",
-        pathname: "/uploads/images/**",
-      },
+    domains: [
+      "next-js-app-backend.vercel.app",
+      "localhost",
+      "storage.googleapis.com",
+      "firebasestorage.googleapis.com",
     ],
   },
   webpack(config) {

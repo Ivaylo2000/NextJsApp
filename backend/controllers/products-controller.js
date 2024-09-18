@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 const handleError = require("../utils/handleError");
 const User = require("../models/user");
+const bucket = require("../firebase");
+const { v4: uuidv4 } = require("uuid");
 
 const getProducts = async (req, res, next) => {
   try {
@@ -61,15 +63,31 @@ const addProduct = async (req, res, next) => {
       return handleError("User not found", 404, next);
     }
 
+    let imageUrl = null;
+
+    if (req.file) {
+      const uniqueFileName = `${uuidv4()}`;
+      const filePath = `products/${uniqueFileName}`;
+      const file = bucket.file(filePath);
+
+      await file.save(req.file.buffer, {
+        metadata: { contentType: req.file.mimetype },
+      });
+
+      imageUrl = `${uniqueFileName}`;
+    }
+
     const newProduct = new Product({
       name: productName,
       price: productPrice,
       category: productCategory,
       description: productDescription,
-      imageUrl: req.file ? `/uploads/images/${req.file.filename}` : null,
+      imageUrl: imageUrl,
       username: username,
       userId: userId,
     });
+
+    await newProduct.save();
 
     res
       .status(201)
@@ -78,6 +96,7 @@ const addProduct = async (req, res, next) => {
     return handleError("Failed to add product", 500, next);
   }
 };
+
 const getUserProducts = async (req, res, next) => {
   const username = req.params.username;
   try {

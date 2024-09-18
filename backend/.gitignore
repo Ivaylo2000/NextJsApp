@@ -14,11 +14,11 @@
 
 /build
 
+nodemon.json
 
 .DS_Store
 *.pem
-
-
+imagestore-9b0d0-firebase-adminsdk-40jv6-bcb42f6e25.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

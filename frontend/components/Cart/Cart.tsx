@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { ICart } from "@/interface/ICart";
 import Button from "@/shared/Button";
 import styles from "./Cart.module.css";
-import Image from "next/image";
-
+import CustomImage from "@/shared/Image";
 interface CartProps {
   userId: string;
 }
@@ -62,9 +61,8 @@ export default function Cart({ userId }: CartProps) {
           <li key={item.id} className={styles.product}>
             <header>
               <div className={styles.image}>
-                <Image
-                  fill
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${item.imageUrl}`}
+                <CustomImage
+                  src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${item.imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
                   alt={item.name}
                 />
               </div>

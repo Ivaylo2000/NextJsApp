@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./page.module.css";
 import { IProduct } from "@/interface/IProduct";
 import AddToCart from "@/components/AddToCart/AddToCart";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import toast from "react-hot-toast";
+import CustomImage from "@/shared/Image";
 export default async function ProductPage({
   params,
 }: {
@@ -37,14 +37,10 @@ export default async function ProductPage({
     <article className={styles.product}>
       <header>
         <div className={styles.image}>
-          {product.imageUrl && (
-            <Image
-              fill
-              src={`${process.env.NEXT_PUBLIC_API_URL}${product.imageUrl}`}
-              alt={product.name}
-              style={{ objectFit: "cover" }}
-            />
-          )}
+          <CustomImage
+            src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${product.imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
+            alt={product.name}
+          />
         </div>
       </header>
       <div className={styles.productInformation}>

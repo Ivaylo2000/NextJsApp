@@ -1,8 +1,7 @@
 import styles from "./products.module.css";
-import Image from "next/image";
 import NavLink from "../MainHeader/nav-links";
 import { IProduct } from "@/interface/IProduct";
-
+import CustomImage from "@/shared/Image";
 export default function Products({
   imageUrl,
   name,
@@ -16,14 +15,10 @@ export default function Products({
       <article>
         <header>
           <div className={styles.image}>
-            {imageUrl && (
-              <Image
-                fill
-                src={`${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`}
-                alt={name}
-                style={{ objectFit: "cover" }}
-              />
-            )}
+            <CustomImage
+              src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
+              alt={name}
+            />
           </div>
           <div className={styles.headerText}>
             <h2>

@@ -1,9 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import styles from "./image-picker.module.css";
-
+import CustomImage from "@/shared/Image";
 interface ImagePickerProps {
   label: string;
   name: string;
@@ -43,10 +42,9 @@ export default function ImagePicker({
           {!pickedImage ? (
             <p>No image picked yet.</p>
           ) : (
-            <Image
+            <CustomImage
               src={pickedImage as string}
               alt="The image selected by the user."
-              fill
             />
           )}
         </div>
