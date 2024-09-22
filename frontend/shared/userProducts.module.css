@@ -80,4 +80,7 @@
   .userProducts {
     margin: 2rem;
   }
+  .productsList {
+    grid-template-columns: 1fr;
+  }
 }
