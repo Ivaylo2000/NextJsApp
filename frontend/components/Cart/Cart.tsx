@@ -98,11 +98,6 @@ export default function Cart({ userId }: CartProps) {
           </li>
         ))}
       </ul>
-      {cartItems.length > 0 && (
-        <Button onClick={() => localStorage.removeItem(`cart_${userId}`)}>
-          Clear Cart
-        </Button>
-      )}
     </article>
   );
 }

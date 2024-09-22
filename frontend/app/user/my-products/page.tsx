@@ -12,7 +12,8 @@ export default async function UserProducts() {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/user/${username}`
+      `${process.env.NEXT_PUBLIC_API_URL}/products/user/${username}`,
+      { next: { revalidate: 5 } }
     );
     if (!response.ok) {
       throw new Error("Failed to fetch user products");

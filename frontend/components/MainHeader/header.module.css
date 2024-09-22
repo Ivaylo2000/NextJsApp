@@ -80,3 +80,18 @@
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
 }
+@media (max-width: 767px) {
+  .main-header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 10px 0px;
+  }
+  .dropdownMenu {
+    left: -120%;
+  }
+  .dropdownMenu li {
+    padding: 20px 20px;
+  }
+}

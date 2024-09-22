@@ -33,7 +33,7 @@ export default function AddToCart({ product, userId }: AddToCartProps) {
         imageUrl: product.imageUrl,
         price: product.price,
         quantity,
-        username: userId, // This line might be redundant if userId is enough
+        username: userId,
       });
     }
 

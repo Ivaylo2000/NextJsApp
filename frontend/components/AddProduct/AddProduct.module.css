@@ -124,3 +124,8 @@
 .charCount {
   align-self: flex-end;
 }
+@media (max-width: 767px) {
+  .row {
+    flex-direction: column;
+  }
+}

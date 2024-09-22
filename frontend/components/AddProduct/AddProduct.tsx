@@ -54,7 +54,6 @@ export default function AddProduct({
           headers: {
             Authorization: `Bearer ${token}`,
           },
-
           body: formData,
         }
       );

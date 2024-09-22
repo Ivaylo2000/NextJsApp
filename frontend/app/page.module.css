@@ -38,3 +38,8 @@
 .cta a:focus {
   background: linear-gradient(90deg, #fd4715, #f9b241);
 }
+@media (max-width: 767px) {
+  .header {
+    text-align: center;
+  }
+}

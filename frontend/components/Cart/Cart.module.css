@@ -135,3 +135,15 @@
   border: none;
   font-size: 24px;
 }
+
+@media (max-width: 767px) {
+  .cartList {
+    max-width: 90rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-gap: 20px 5rem;
+    margin: 2rem 2rem;
+    list-style: none;
+    padding: 0;
+  }
+}
