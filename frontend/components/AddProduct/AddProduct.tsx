@@ -4,6 +4,7 @@ import styles from "./AddProduct.module.css";
 import ImagePicker from "@/components/ImagePicker/image-picker";
 import Button from "@/shared/Button";
 import toast from "react-hot-toast";
+
 export default function AddProduct({
   username,
   token,

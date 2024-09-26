@@ -10,7 +10,7 @@ export default async function ProductsPage() {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products`,
       {
-        next: { revalidate: 5 },
+        cache: "no-store",
       }
     );
     if (!response.ok) {
