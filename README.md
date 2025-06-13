@@ -2,7 +2,7 @@
 <h4 >This is a full-stack web application that allows users to register, browse and post products, and manage a shopping cart. The project is built with a modern tech stack including Next.js, TypeScript, Node.js, MongoDB, and Firebase.
 </h4>
 
-- 🚀 <a href="https://next-js-app-frontend.vercel.app/" target="_blank">**Live Demo**</a>
+🚀 <a href="https://next-js-app-frontend.vercel.app/" target="_blank">**Live Demo**</a>
 
 **Test Account :**
   
