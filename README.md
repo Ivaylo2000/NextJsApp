@@ -4,13 +4,11 @@
 
 - 🚀 <a href="https://next-js-app-frontend.vercel.app/" target="_blank">**Live Demo**</a>
 
-- <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;">
-    <path d="M12 12c2.7 0 4.5-2 4.5-4.5S14.7 3 12 3 7.5 5 7.5 7.5 9.3 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z"/>
-  </svg> Test Account : 
+**Test Account :**
   
-- - Email: 📧 testaccount@test.com 
+- Email: 📧 testaccount@test.com 
 
-- - Password: 🔑 test
+- Password: 🔑 test
 
 
 🖥️ Features
