@@ -79,7 +79,7 @@
   gap: 1rem;
 }
 
-.row p {
+.row .formGroup {
   width: 100%;
 }
 

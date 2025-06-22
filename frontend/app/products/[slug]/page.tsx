@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import toast from "react-hot-toast";
 import CustomImage from "@/shared/Image";
+
 export default async function ProductPage({
   params,
 }: {
@@ -33,12 +34,14 @@ export default async function ProductPage({
     return notFound();
   }
 
+  const isCurrentUserProduct = product.userId === userId ? true : false;
+
   return (
     <article className={styles.product}>
       <header>
         <div className={styles.image}>
           <CustomImage
-            src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${product.imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
+            src={`${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_BASE_URL}${product.imageUrl}?alt=media&token=${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_TOKEN}`}
             alt={product.name}
           />
         </div>
@@ -52,12 +55,17 @@ export default async function ProductPage({
           <p>
             By:
             <span className={styles.productSeller}>
-              <Link href={`/user/${product.username}/products`}>
-                {product.username}
+              <Link
+                href={
+                  isCurrentUserProduct
+                    ? "/user/my-products"
+                    : `/user/${product.username}/products`
+                }
+              >
+                {isCurrentUserProduct ? "You" : product.username}
               </Link>
             </span>
           </p>
-
           <h2>{product.name}</h2>
         </div>
         <div className={styles.content}>
@@ -68,8 +76,9 @@ export default async function ProductPage({
           <p className={styles.price}>
             Price: <span>{product.price} $</span>
           </p>
-
-          <AddToCart product={product} userId={userId} />
+          {!isCurrentUserProduct && (
+            <AddToCart product={product} userId={userId} />
+          )}
         </div>
       </div>
     </article>

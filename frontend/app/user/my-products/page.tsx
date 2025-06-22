@@ -2,6 +2,8 @@ import { IProduct } from "@/interface/IProduct";
 import styles from "../../../shared/userProducts.module.css";
 import { cookies } from "next/headers";
 import CustomImage from "@/shared/Image";
+import DeleteProduct from "@/components/DeleteProduct/DeleteProduct";
+import EditProduct from "@/components/EditProduct/EditProduct";
 
 export default async function UserProducts() {
   const cookieStore = cookies();
@@ -13,7 +15,7 @@ export default async function UserProducts() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/products/user/${username}`,
-      { next: { revalidate: 5 } }
+      { cache: "no-store" }
     );
     if (!response.ok) {
       throw new Error("Failed to fetch user products");
@@ -33,7 +35,7 @@ export default async function UserProducts() {
               <header>
                 <div className={styles.image}>
                   <CustomImage
-                    src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${product.imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
+                    src={`${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_BASE_URL}${product.imageUrl}?alt=media&token=${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_TOKEN}`}
                     alt={product.name}
                   />
                 </div>
@@ -42,15 +44,19 @@ export default async function UserProducts() {
                 <p className={styles.productName}>
                   Name:
                   <span> {product.name}</span>
+                  <EditProduct product={product} />
                 </p>
 
                 <p className={styles.productPrice}>
                   Price: <span> {product.price} $</span>
                 </p>
+
                 <p className={styles.description}>
                   Description:
                   <span> {product.description}</span>
                 </p>
+
+                <DeleteProduct product={product} userId={username} />
               </div>
             </li>
           ))}

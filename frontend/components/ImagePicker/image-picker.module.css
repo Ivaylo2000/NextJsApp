@@ -45,3 +45,9 @@
 .preview img {
   object-fit: cover;
 }
+.highlight {
+  background: linear-gradient(90deg, #f9572a, #ff8a05);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

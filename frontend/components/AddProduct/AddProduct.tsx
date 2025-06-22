@@ -4,6 +4,7 @@ import styles from "./AddProduct.module.css";
 import ImagePicker from "@/components/ImagePicker/image-picker";
 import Button from "@/shared/Button";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function AddProduct({
   username,
@@ -14,6 +15,7 @@ export default function AddProduct({
   token: string | null;
   userId: string | null;
 }) {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [pickedImage, setPickedImage] = useState<string | ArrayBuffer | null>(
     null
@@ -68,6 +70,7 @@ export default function AddProduct({
         setProductCategory("");
         setProductDescription("");
         setTextAreaCount(0);
+        router.refresh();
       } else {
         toast.error("Failed to add product");
       }
@@ -89,7 +92,7 @@ export default function AddProduct({
       </header>
       <main className={styles.main}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <p>
+          <div className={styles.formGroup}>
             <label htmlFor="name">Name</label>
             <input
               type="text"
@@ -101,9 +104,9 @@ export default function AddProduct({
               }}
               required
             />
-          </p>
+          </div>
           <div className={styles.row}>
-            <p>
+            <div className={styles.formGroup}>
               <label htmlFor="price">Price</label>
               <input
                 type="number"
@@ -115,8 +118,8 @@ export default function AddProduct({
                 onChange={(e) => setProductPrice(e.target.value)}
                 required
               />
-            </p>
-            <p>
+            </div>
+            <div className={styles.formGroup}>
               <label htmlFor="category">Category</label>
               <select
                 id="category"
@@ -132,7 +135,7 @@ export default function AddProduct({
                 <option value="Electronics">Electronics</option>
                 <option value="Sport">Sport</option>
               </select>
-            </p>
+            </div>
           </div>
           <div className={styles.descriptionContainer}>
             <label htmlFor="description">Description</label>

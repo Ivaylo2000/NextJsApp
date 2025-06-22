@@ -62,7 +62,7 @@ export default function Cart({ userId }: CartProps) {
             <header>
               <div className={styles.image}>
                 <CustomImage
-                  src={`https://firebasestorage.googleapis.com/v0/b/imagestore-9b0d0.appspot.com/o/products%2F${item.imageUrl}?alt=media&token=8620166b-f4a4-4bd6-b68b-e0e580e688ba`}
+                  src={`${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_BASE_URL}${item.imageUrl}?alt=media&token=${process.env.NEXT_PUBLIC_FIREBASE_IMAGE_TOKEN}`}
                   alt={item.name}
                 />
               </div>

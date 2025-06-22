@@ -1,0 +1,57 @@
+.editIcon {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 60%;
+}
+
+.highlight {
+  background: linear-gradient(90deg, #f9572a, #ff8a05);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form input,
+.form textarea,
+.form select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #454952;
+  background: linear-gradient(90deg, #2c1e19, #25200f);
+  font-size: 1.25rem;
+  font-family: "Montserrat", sans-serif;
+  color: #ddd6cb;
+}
+
+.submitButton {
+  border: 0;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(90deg, #f9572a, #ff9b05);
+  border: none;
+  color: #ffffff;
+  border-radius: 2px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.submitButton:hover,
+.submitButton:focus {
+  background: linear-gradient(90deg, #fd4715, #f9b241);
+}

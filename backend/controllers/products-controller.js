@@ -3,6 +3,8 @@ const handleError = require("../utils/handleError");
 const User = require("../models/user");
 const bucket = require("../firebase");
 const { v4: uuidv4 } = require("uuid");
+const checkAuth = require("./../middleware/auth");
+const uploadImageToFirebase = require("../utils/uploadImage");
 
 const getProducts = async (req, res, next) => {
   try {
@@ -24,6 +26,7 @@ const getProducts = async (req, res, next) => {
     return handleError("Something went wrong", 500, next);
   }
 };
+
 const getProduct = async (req, res, next) => {
   const productName = req.params.productName.replaceAll("-", " ");
 
@@ -66,19 +69,11 @@ const addProduct = async (req, res, next) => {
     let imageUrl = null;
 
     if (req.file) {
-      const uniqueFileName = `${uuidv4()}`;
-      const filePath = `products/${uniqueFileName}`;
-      const file = bucket.file(filePath);
-
-      await file.save(req.file.buffer, {
-        metadata: { contentType: req.file.mimetype },
-      });
-
-      imageUrl = `${uniqueFileName}`;
+      imageUrl = await uploadImageToFirebase(req.file);
     }
 
     const newProduct = new Product({
-      name: productName,
+      name: productName.trim(),
       price: productPrice,
       category: productCategory,
       description: productDescription,
@@ -93,6 +88,7 @@ const addProduct = async (req, res, next) => {
       .status(201)
       .json({ message: "Product added successfully!", product: newProduct });
   } catch (err) {
+    console.error("Add product error:", err);
     return handleError("Failed to add product", 500, next);
   }
 };
@@ -119,9 +115,79 @@ const getUserProducts = async (req, res, next) => {
     return handleError("Server error", 500, next);
   }
 };
+
+const deleteProduct = async (req, res, next) => {
+  const productId = req.params.id;
+
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return handleError("Product not found", 404, next);
+    }
+
+    const productName = product.imageUrl;
+
+    if (!productName) {
+      return handleError("Image URL not found", 404, next);
+    }
+
+    const file = bucket.file(`products/${productName}`);
+
+    const [exists] = await file.exists();
+    if (!exists) {
+      return handleError("File not found in bucket", 404, next);
+    }
+
+    await file.delete();
+    await Product.deleteOne({ _id: productId });
+
+    res.status(200).json({ message: "Product deleted successfully!" });
+  } catch (error) {
+    return handleError("Server error", 500, next);
+  }
+};
+
+const updateProduct = async (req, res, next) => {
+  const productId = req.params.id;
+
+  const { productName, productPrice, productDescription } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return handleError("Product not found", 404, next);
+    }
+
+    if (req.file) {
+      if (product.imageUrl) {
+        const oldFile = bucket.file(`products/${product.imageUrl}`);
+        await oldFile.delete();
+      }
+
+      const imageUrl = await uploadImageToFirebase(req.file);
+
+      product.imageUrl = imageUrl;
+    }
+
+    product.name = productName.trim();
+    product.price = productPrice;
+    product.description = productDescription;
+
+    await product.save();
+
+    res.status(200).json({ message: "Product updated successfully!", product });
+  } catch (err) {
+    console.error("update product error:", err);
+    return handleError("Failed to update product", 500, next);
+  }
+};
+
 module.exports = {
   getProducts,
   getProduct,
   addProduct,
   getUserProducts,
+  deleteProduct,
+  updateProduct,
 };

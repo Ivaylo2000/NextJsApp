@@ -11,6 +11,7 @@ interface ImagePickerProps {
   setPickedImage: React.Dispatch<
     React.SetStateAction<string | ArrayBuffer | null>
   >;
+  initialImage?: string | null;
 }
 
 export default function ImagePicker({
@@ -19,6 +20,7 @@ export default function ImagePicker({
   onImagePicked,
   pickedImage,
   setPickedImage,
+  initialImage = null,
 }: ImagePickerProps) {
   const imageInput = useRef<HTMLInputElement>(null);
 
@@ -29,22 +31,27 @@ export default function ImagePicker({
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      setPickedImage(URL.createObjectURL(file));
+      const objectUrl = URL.createObjectURL(file);
+      setPickedImage(objectUrl);
       onImagePicked(file);
+
+      return () => URL.revokeObjectURL(objectUrl);
     }
   }
 
   return (
     <div className={styles.picker}>
-      <label htmlFor={name}>{label}</label>
+      <label className={styles.highlight} htmlFor={name}>
+        {label}
+      </label>
       <div className={styles.controls}>
         <div className={styles.preview}>
-          {!pickedImage ? (
+          {!pickedImage && !initialImage ? (
             <p>No image picked yet.</p>
           ) : (
             <CustomImage
-              src={pickedImage as string}
-              alt="The image selected by the user."
+              src={(pickedImage as string) || initialImage!}
+              alt="Selected image"
             />
           )}
         </div>
@@ -54,7 +61,7 @@ export default function ImagePicker({
           id={name}
           accept="image/png, image/jpeg, image/jpg"
           name={name}
-          required
+          required={!pickedImage && !initialImage}
           ref={imageInput}
           onChange={handleImageChange}
         />
